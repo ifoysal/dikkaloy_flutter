@@ -1,5 +1,7 @@
 name: livemcq3
-description: LiveMCQ3 - Coaching & Career Platform
+description: Dikkhaloy - Coaching, Live MCQ Exams & Career Platform developed and maintained by Nothibazar.
+homepage: https://nothibazar.com.bd
+repository: https://github.com/ifoysal/dikkaloy_flutter
 
 publish_to: 'none'
 version: 1.0.0+1
