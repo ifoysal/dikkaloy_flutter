@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_MOBILE_SDK_ENABLED</key>
+	<true/>
+	<key>BATCH_BEACON_REFRESH_BROADCAST_ENABLED</key>
+	<true/>
+	<key>BATCH_STARTED_LOCALE</key>
+	<string>en</string>
+	<key>BATCH_CUSTOM_CONFIG</key>
+	<string>REPLACE_WITH_YOUR_BATCH_CUSTOM_CONFIG</string>
+	<key>BUGSENSE_API_KEY</key>
+	<string>REPLACE_WITH_YOUR_BUGSENSE_API_KEY</string>
+	<key>BUILD_ENVIRONMENT</key>
+	<string>REPLACE_WITH_YOUR_BUILD_ENVIRONMENT</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>REPLACE_WITH_REVERSED_CLIENT_ID</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>REPLACE_WITH_REVERSED_CLIENT_ID</string>
+			</array>
+		</dict>
+	</array>
+	<key>CLIENT_ID</key>
+	<string>REPLACE_WITH_YOUR_CLIENT_ID</string>
+	<key>CLIENT_TOKEN</key>
+	<string>REPLACE_WITH_YOUR_CLIENT_TOKEN</string>
+	<key>GCM_SENDER_ID</key>
+	<string>REPLACE_WITH_YOUR_GCM_SENDER_ID</string>
+	<key>GOOGLE_APP_ID</key>
+	<string>REPLACE_WITH_YOUR_GOOGLE_APP_ID</string>
+	<key>GOOGLE_CLOUD_PROJECT_ID</key>
+	<string>REPLACE_WITH_YOUR_PROJECT_ID</string>
+	<key>IOS_API_PACKAGE_NAME</key>
+	<string>com.nothibazar.livemcq</string>
+	<key>IS_AD_ID_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<true/>
+	<key>IS_APP_INVITES_ENABLED</key>
+	<true/>
+	<key>IS_AS_AD_ID_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_READ_APP_ID_ENABLED</key>
+	<true/>
+	<key>IS_SCREEN_CAPTURE_ENABLED</key>
+	<true/>
+	<key>LIFERAY_ANALYTICS_APP_ID</key>
+	<string>REPLACE_WITH_YOUR_LIFERAY_ANALYTICS_APP_ID</string>
+	<key>LIFERAY_ANALYTICS_APP_SECRET</key>
+	<string>REPLACE_WITH_YOUR_LIFERAY_ANALYTICS_APP_SECRET</string>
+	<key>LIFERAY_ANALYTICS_KEY</key>
+	<string>REPLACE_WITH_YOUR_LIFERAY_ANALYTICS_KEY</string>
+	<key>LIFERAY_ANALYTICS_SECRET</key>
+	<string>REPLACE_WITH_YOUR_LIFERAY_ANALYTICS_SECRET</string>
+	<key>LOCALIZATION_SDK_ENABLED</key>
+	<true/>
+	<key>MANAGE_SEARCHABLES</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to allow you to capture photos for your profile.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs location access to show nearby job listings.</string>
+	<key>NSSiriUsageDescription</key>
+	<string>This app uses Siri to help you access your bookmarks quickly.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app needs contacts access to allow you to invite friends.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app needs calendar access to set job deadline reminders.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>This app needs reminders access to send you daily quiz reminders.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This app needs media library access to allow you to add music to your profile.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This app uses Bluetooth to connect to nearby devices.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This app needs Bluetooth access to connect to nearby devices.</string>
+	<key>PHPhotoLibraryUsageDescription</key>
+	<string>This app needs photo library access to let you select profile photos and save book downloads.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>fetch</string>
+	</array>
+	<key>REVERB_APP_KEY</key>
+	<string>REPLACE_WITH_YOUR_REVERB_APP_KEY</string>
+	<key>REVERB_APP_ID</key>
+	<string>REPLACE_WITH_YOUR_REVERB_APP_ID</string>
+	<key>REVERB_APP_CLUSTER</key>
+	<string>REPLACE_WITH_YOUR_REVERB_APP_CLUSTER</string>
+	<key>REVERB_TELEMETRY</key>
+	<true/>
+	<key>SAMPLES_APP_KEY</key>
+	<string>REPLACE_WITH_YOUR_SAMPLES_APP_KEY</string>
+	<key>SUPPRESS_LAUNCH_SCREEN</key>
+	<true/>
+	<key>TRACK_WIDGET_RELOADS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>Google Maps API Key</key>
+	<string>REPLACE_WITH_YOUR_GOOGLE_MAPS_API_KEY</string>
+	<key>VungleApplicationId</key>
+	<string>REPLACE_WITH_YOUR_VUNGLE_APPLICATION_ID</string>
+</dict>
+</plist>

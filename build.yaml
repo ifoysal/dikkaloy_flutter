@@ -1,0 +1,7 @@
+targets:
+  $default:
+    builders:
+      riverpod_generator:
+        options:
+          generate_reset_provider: true
+          generate_keep_scope_provider: true
