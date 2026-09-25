@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:livemcq3/core/providers/auth_providers.dart';
@@ -43,7 +43,7 @@ class _PhoneLoginScreenState extends ConsumerState<PhoneLoginScreen> {
     final isLoading = ref.watch(authNotifierProvider).isLoading;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Phone Login')),
+      appBar: AppBar(title: Text('\u09AB\u09CB\u09A8' + ' \u09B2\u0997\u0987\u09A8')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -56,18 +56,20 @@ class _PhoneLoginScreenState extends ConsumerState<PhoneLoginScreen> {
                 const SizedBox(height: 24),
                 TextFormField(
                   controller: _phoneController,
-                  decoration: const InputDecoration(labelText: 'Phone Number'),
+                  decoration: InputDecoration(labelText: '\u09AB\u09CB\u09A8' + ' \u09A8\u09AE\u09CD\u09AC\u09B0'),
                   keyboardType: TextInputType.phone,
-                  validator: (v) => v != null && v.length >= 10 ? null : 'Enter a valid phone number',
+                  validator: (v) => v != null && v.length >= 10 ? null : '\u09B8\u09A0\u09BF\u0995' + ' \u09AB\u09CB\u09A8' + ' \u09A8\u09AE\u09CD\u09AC\u09B0' + ' \u09A6\u09BF\u09A8',
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: isLoading ? null : _sendOtp,
-                  child: isLoading ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.onPrimary)) : const Text('Send OTP'),
+                  child: isLoading
+                      ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.onPrimary))
+                      : Text('\u0993\u099F\u09BF\u09AA\u09BF' + ' \u09AA\u09BE\u09A0\u09BE\u09A8'),
                 ),
                 TextButton(
                   onPressed: () => context.push('/login'),
-                  child: const Text('Use email/password instead?'),
+                  child: Text('\u0987\u09AE\u09C7\u0987\u09B2/\u09AA\u09BE\u09B8\u0993\u09AF\u09BC\u09BE\u09B0\u09CD\u09A1' + ' \u09A6\u09BF\u09AF\u09BC\u09C7' + ' \u09B2\u0997\u0987\u09A8' + ' \u0995\u09B0\u09C1\u09A8'),
                 ),
               ],
             ),

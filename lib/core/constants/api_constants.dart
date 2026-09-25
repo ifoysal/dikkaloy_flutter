@@ -2,8 +2,7 @@ class ApiConstants {
   static const String baseUrlKey = 'API_BASE_URL';
 
   static String get baseUrl {
-    final url = const String.fromEnvironment('API_BASE_URL', defaultValue: '');
-    if (url.isEmpty) throw Exception('API_BASE_URL is not defined');
+    const url = String.fromEnvironment('API_BASE_URL', defaultValue: 'https://dikkhaloy.com.bd');
     return url.replaceAll(RegExp(r'\s+'), '').replaceAll(RegExp(r'/+$'), '');
   }
 
