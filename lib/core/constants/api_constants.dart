@@ -2,7 +2,7 @@ class ApiConstants {
   static const String baseUrlKey = 'API_BASE_URL';
 
   static String get baseUrl {
-    const url = String.fromEnvironment('API_BASE_URL', defaultValue: 'https://dikkhaloy.com.bd');
+    const url = String.fromEnvironment('API_BASE_URL', defaultValue: 'https://dikkhaloy.kidsgrow.com.bd');
     return url.replaceAll(RegExp(r'\s+'), '').replaceAll(RegExp(r'/+$'), '');
   }
 
