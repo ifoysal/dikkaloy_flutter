@@ -49,7 +49,8 @@ class CarrierBillingNotifier extends StateNotifier<CarrierBillingState> {
     try {
       final data = await _repo.verifyOtp(phone, otp);
       if (data['success'] == true) {
-        final token = data['token'] as String?;
+        final responseData = data['data'] as Map<String, dynamic>?;
+        final token = responseData?['token'] as String?;
         if (token != null && token.isNotEmpty) {
           await _ref.read(secureStorageProvider).writeToken(token);
           await _ref.read(authNotifierProvider.notifier).checkAuth();

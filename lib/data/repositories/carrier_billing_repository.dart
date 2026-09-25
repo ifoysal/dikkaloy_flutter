@@ -8,14 +8,14 @@ class CarrierBillingRepository {
 
   Future<void> requestOtp(String phone) async {
     await dioClient.dio.post(
-      ApiEndpoints.dcbOtpSend,
+      ApiEndpoints.carrierBillingOtpRequest,
       data: {'phone': phone},
     );
   }
 
   Future<Map<String, dynamic>> verifyOtp(String phone, String otp) async {
     final response = await dioClient.dio.post(
-      ApiEndpoints.dcbVerifyAndSubscribe,
+      ApiEndpoints.carrierBillingOtpVerify,
       data: {'phone': phone, 'otp': otp},
     );
     return response.data as Map<String, dynamic>;
@@ -29,7 +29,7 @@ class CarrierBillingRepository {
 
   Future<bool> unsubscribe(int subscriptionId) async {
     final response = await dioClient.dio.post(
-      ApiEndpoints.dcbBillingCancel,
+      ApiEndpoints.carrierBillingUnsubscribe,
       data: {'subscription_id': subscriptionId},
     );
     return response.data['success'] == true;
