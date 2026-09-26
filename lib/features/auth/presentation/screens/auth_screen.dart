@@ -204,6 +204,21 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
           ),
         ),
+        const SizedBox(height: 12),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFF3CD),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: const Color(0xFFFFE69C)),
+          ),
+          child: const Text(
+            'Robi (০১৮/০১৬) (প্রযোজ্য - ২.৭৮ ৳/দিন)',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF7A5B00)),
+          ),
+        ),
         if (_errorMessage != null) ...[
           const SizedBox(height: 10),
           Text(_errorMessage!, style: const TextStyle(color: AppTheme.error, fontSize: 12)),
