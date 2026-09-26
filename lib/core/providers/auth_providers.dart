@@ -1,9 +1,25 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:livemcq3/core/providers/app_providers.dart';
 import 'package:livemcq3/core/storage/secure_storage.dart';
 import 'package:livemcq3/data/models/user_model.dart';
 import 'package:livemcq3/data/repositories/auth_repository.dart';
 import 'dart:async';
+
+/// Result of requesting a BDApps DCB OTP for phone-based login.
+class DcbOtpRequestResult {
+  final bool alreadyLoggedIn;
+
+  const DcbOtpRequestResult({required this.alreadyLoggedIn});
+}
+
+String _dcbErrorMessage(Object e, String fallback) {
+  if (e is DioException) {
+    final data = e.response?.data;
+    if (data is Map && data['message'] is String) return data['message'] as String;
+  }
+  return fallback;
+}
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepository(ref.watch(dioClientProvider));
@@ -108,6 +124,60 @@ class AuthNotifier extends StateNotifier<AsyncValue<UserModel?>> {
     }
   }
 
+  /// Validates that [phone] belongs to Robi/Airtel. Returns the backend's
+  /// Bengali message on both success and failure.
+  Future<Map<String, dynamic>> checkOperator(String phone) async {
+    try {
+      return await _repo.checkOperator(phone);
+    } on DioException catch (e) {
+      final data = e.response?.data;
+      if (data is Map<String, dynamic>) return data;
+      rethrow;
+    }
+  }
+
+  /// Requests a BDApps OTP for [phone]. When the number already has an
+  /// active BDApps subscription, the backend logs the user in immediately
+  /// and this returns [DcbOtpRequestResult.alreadyLoggedIn] = true.
+  Future<DcbOtpRequestResult> requestDcbOtp(String phone) async {
+    state = const AsyncValue.loading();
+    try {
+      final res = await _repo.requestDcbOtp(phone);
+      final loggedInNow = res['already_subscribed'] == true || res['direct_login'] == true;
+      if (loggedInNow) {
+        final data = res['data'] as Map<String, dynamic>;
+        await _storage.writeToken(data['token'] as String);
+        state = AsyncValue.data(UserModel.fromJson(data['user'] as Map<String, dynamic>));
+        return const DcbOtpRequestResult(alreadyLoggedIn: true);
+      }
+      if (res['success'] != true) {
+        throw Exception(res['message'] ?? 'কোড পাঠাতে ব্যর্থ হয়েছে');
+      }
+      state = const AsyncValue.data(null);
+      return const DcbOtpRequestResult(alreadyLoggedIn: false);
+    } catch (e) {
+      state = const AsyncValue.data(null);
+      throw Exception(_dcbErrorMessage(e, e is Exception ? e.toString().replaceFirst('Exception: ', '') : 'কোড পাঠাতে ব্যর্থ হয়েছে'));
+    }
+  }
+
+  /// Verifies the BDApps OTP for [phone] and logs the user in.
+  Future<void> verifyDcbOtp(String phone, String otp) async {
+    state = const AsyncValue.loading();
+    try {
+      final res = await _repo.verifyDcbOtp(phone, otp);
+      if (res['success'] != true) {
+        throw Exception(res['message'] ?? 'ভুল ওটিপি কোড');
+      }
+      final data = res['data'] as Map<String, dynamic>;
+      await _storage.writeToken(data['token'] as String);
+      state = AsyncValue.data(UserModel.fromJson(data['user'] as Map<String, dynamic>));
+    } catch (e) {
+      state = const AsyncValue.data(null);
+      throw Exception(_dcbErrorMessage(e, e is Exception ? e.toString().replaceFirst('Exception: ', '') : 'যাচাই ব্যর্থ হয়েছে'));
+    }
+  }
+
   Future<void> logout() async {
     state = const AsyncValue.loading();
     try {
@@ -115,6 +185,30 @@ class AuthNotifier extends StateNotifier<AsyncValue<UserModel?>> {
     } catch (_) {}
     await _storage.clear();
     state = const AsyncValue.data(null);
+  }
+
+  /// Cancels the caller's active BDApps carrier-billing subscription, same
+  /// as the "সাবস্ক্রিপশন বাতিল করুন" flow on the website. On success the
+  /// backend also invalidates the session, so this logs the user out too.
+  Future<String> unsubscribeCarrierBilling() async {
+    try {
+      final status = await _repo.getCarrierBillingStatus();
+      final subscriptionId = status?['id'] as int?;
+      if (subscriptionId == null) {
+        throw Exception('কোনো সক্রিয় সাবস্ক্রিপশন পাওয়া যায়নি।');
+      }
+
+      final res = await _repo.unsubscribeCarrierBilling(subscriptionId);
+      if (res['success'] != true) {
+        throw Exception(res['message'] ?? 'বাতিল করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+      }
+
+      await _storage.clear();
+      state = const AsyncValue.data(null);
+      return res['message'] as String? ?? 'আপনার সাবস্ক্রিপশন সফলভাবে বাতিল করা হয়েছে।';
+    } catch (e) {
+      throw Exception(_dcbErrorMessage(e, e is Exception ? e.toString().replaceFirst('Exception: ', '') : 'বাতিল করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।'));
+    }
   }
 
   Future<void> registerFcmToken(String token, String platform) async {

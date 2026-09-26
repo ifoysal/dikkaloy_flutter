@@ -43,6 +43,46 @@ class AuthRepository {
     return response.data['success'] == true;
   }
 
+  /// Checks whether [phone] belongs to an operator eligible for BDApps DCB
+  /// (Robi / Airtel only). Throws with the backend's Bengali message when not.
+  Future<Map<String, dynamic>> checkOperator(String phone) async {
+    final response = await dioClient.dio.post(ApiEndpoints.dcbOperatorCheck, data: {'phone': phone});
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// Requests a BDApps OTP for [phone]. If the number is already an active
+  /// BDApps subscriber, the backend logs the user in directly without an OTP.
+  Future<Map<String, dynamic>> requestDcbOtp(String phone) async {
+    final response = await dioClient.dio.post(ApiEndpoints.carrierBillingOtpRequest, data: {'phone': phone});
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// Verifies the BDApps OTP for [phone] and returns the auth token + user.
+  Future<Map<String, dynamic>> verifyDcbOtp(String phone, String otp) async {
+    final response = await dioClient.dio.post(
+      ApiEndpoints.carrierBillingOtpVerify,
+      data: {'phone': phone, 'otp': otp},
+    );
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// Fetches the caller's latest BDApps carrier-billing subscription record,
+  /// or null if none exists.
+  Future<Map<String, dynamic>?> getCarrierBillingStatus() async {
+    final response = await dioClient.dio.get(ApiEndpoints.carrierBillingStatus);
+    return response.data['data'] as Map<String, dynamic>?;
+  }
+
+  /// Unsubscribes the given BDApps carrier-billing subscription. On success
+  /// the backend also invalidates the session (logs the user out).
+  Future<Map<String, dynamic>> unsubscribeCarrierBilling(int subscriptionId) async {
+    final response = await dioClient.dio.post(
+      ApiEndpoints.carrierBillingUnsubscribe,
+      data: {'subscription_id': subscriptionId},
+    );
+    return response.data as Map<String, dynamic>;
+  }
+
   Future<UserModel> me() async {
     final response = await dioClient.dio.get(ApiEndpoints.me);
     final data = response.data['data'] as Map<String, dynamic>;

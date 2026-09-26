@@ -21,7 +21,7 @@ class CategoriesScreen extends ConsumerWidget {
         actions: [
           if (!isLoggedIn)
             TextButton.icon(
-              onPressed: () => context.push('/login'),
+              onPressed: () => context.push('/auth'),
               icon: const Icon(Icons.login, color: Colors.white),
               label: const Text('লগইন', style: TextStyle(color: Colors.white)),
             ),

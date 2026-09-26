@@ -2,10 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:livemcq3/features/auth/presentation/screens/splash_screen.dart';
-import 'package:livemcq3/features/auth/presentation/screens/onboarding_screen.dart';
-import 'package:livemcq3/features/auth/presentation/screens/login_screen.dart';
-import 'package:livemcq3/features/auth/presentation/screens/register_screen.dart';
-import 'package:livemcq3/features/auth/presentation/screens/otp_screen.dart';
+import 'package:livemcq3/features/auth/presentation/screens/auth_screen.dart';
 import 'package:livemcq3/features/home/presentation/screens/home_screen.dart';
 import 'package:livemcq3/features/mcq/presentation/screens/categories_screen.dart';
 import 'package:livemcq3/features/mcq/presentation/screens/practice_screen.dart';
@@ -68,10 +65,7 @@ GoRouter createRouter(SecureStorage secureStorage, DioClient dioClient) {
     initialLocation: '/splash',
     routes: [
       GoRoute(path: '/splash', builder: (_, __) => const SplashScreen()),
-      GoRoute(path: '/onboarding', builder: (_, __) => const OnboardingScreen()),
-      GoRoute(path: '/login', builder: (_, __) => const LoginScreen()),
-      GoRoute(path: '/register', builder: (_, __) => const RegisterScreen()),
-      GoRoute(path: '/otp', builder: (_, __) => const OtpScreen()),
+      GoRoute(path: '/auth', builder: (_, __) => const AuthScreen()),
       GoRoute(path: '/home', builder: (_, __) => const HomeScreen()),
       GoRoute(path: '/categories', builder: (_, __) => const CategoriesScreen()),
       GoRoute(path: '/practice/:categoryId', builder: (_, state) => PracticeScreen(categoryId: int.parse(state.pathParameters['categoryId']!))),

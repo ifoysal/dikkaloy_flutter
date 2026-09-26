@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:livemcq3/core/constants/app_constants.dart';
 import 'package:livemcq3/core/constants/api_constants.dart';
-import 'package:livemcq3/core/errors/exceptions.dart';
 import 'package:livemcq3/core/storage/secure_storage.dart';
 
 class DioClient {
@@ -23,10 +23,12 @@ class DioClient {
 
     dio.interceptors.add(ApiInterceptor(secureStorage: secureStorage));
 
-    (dio.httpClientAdapter as dynamic).onHttpClientCreate = (client) {
+    final adapter = IOHttpClientAdapter();
+    adapter.onHttpClientCreate = (HttpClient client) {
       client.badCertificateCallback = (cert, host, port) => false;
       return client;
     };
+    dio.httpClientAdapter = adapter;
   }
 }
 
@@ -48,11 +50,10 @@ class ApiInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
       await secureStorage.deleteToken();
-      throw AuthException('Unauthorized');
     }
 
-    final url = err.requestOptions.uri.toString();
-    throw NetworkException('Network error: unable to reach $url. '
-        'Ensure API_BASE_URL is correct and the backend is running.');
+    // Forward the original error so callers can read the real backend
+    // response (e.g. BDApps diagnostic messages) instead of a generic one.
+    handler.next(err);
   }
 }
