@@ -27,6 +27,13 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("debug")
+            // Uploading the ProGuard/R8 mapping file to Crashlytics requires a
+            // reachable Firebase backend at build time; skip it so local/CI
+            // release builds don't fail when that network call can't succeed.
+            // Crashlytics itself still works at runtime.
+            configure<com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension> {
+                mappingFileUploadEnabled = false
+            }
         }
     }
 }

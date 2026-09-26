@@ -27,3 +27,10 @@
 # Firebase Core & Messaging
 -keep class com.google.firebase.** { *; }
 -dontwarn com.google.firebase.**
+
+# Flutter's Play Store deferred-components support references Play Core split
+# classes that aren't included since this app doesn't use dynamic feature
+# delivery. Safe to ignore rather than bundling the unused dependency.
+-dontwarn com.google.android.play.core.splitcompat.**
+-dontwarn com.google.android.play.core.splitinstall.**
+-dontwarn com.google.android.play.core.tasks.**
